@@ -1,0 +1,24 @@
+{
+  "data_hash": null,
+  "timestamp": "2026-01-11T22:50:48.059993",
+  "initial": {
+    "theory_scores": {
+      "x_market": 1.2,
+      "x_political": 1.8,
+      "x_institutional": 1.1
+    },
+    "prompt": "",
+    "context_hash": "fb03def1",
+    "timestamp": "2026-01-11T11:27:51.178554"
+  },
+  "final": {
+    "theory_scores": {
+      "x_market": -1.2,
+      "x_political": 0.5,
+      "x_institutional": 0.7
+    },
+    "prompt": "",
+    "context_hash": "bd129bca",
+    "timestamp": "2026-01-11T22:50:48.059993"
+  }
+}

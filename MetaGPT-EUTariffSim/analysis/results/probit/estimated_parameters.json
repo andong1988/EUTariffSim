@@ -1,0 +1,69 @@
+{
+  "thresholds": {
+    "alpha1": -0.6,
+    "alpha2": 0.6
+  },
+  "country_weights": {
+    "Denmark": {
+      "x_market": 0.14286775146373235,
+      "x_political": 0.7142644970725353,
+      "x_institutional": 0.14286775146373235
+    },
+    "France": {
+      "x_market": 0.1666704071185543,
+      "x_political": 0.4943333472579198,
+      "x_institutional": 0.3389962456235258
+    },
+    "Germany": {
+      "x_market": 0.7142671841828608,
+      "x_political": 0.14286640790856958,
+      "x_institutional": 0.14286640790856958
+    },
+    "Ireland": {
+      "x_market": 0.20260241275562163,
+      "x_political": 0.2770637485777109,
+      "x_institutional": 0.5203338386666675
+    },
+    "Italy": {
+      "x_market": 0.16651942664909936,
+      "x_political": 0.6669611467018014,
+      "x_institutional": 0.16651942664909936
+    },
+    "Lithuania": {
+      "x_market": 0.16667118573120165,
+      "x_political": 0.2362377226415368,
+      "x_institutional": 0.5970910916272615
+    },
+    "Netherland": {
+      "x_market": 0.16667167839233565,
+      "x_political": 0.6622800474953627,
+      "x_institutional": 0.17104827411230156
+    },
+    "Spain": {
+      "x_market": 0.38395062200389307,
+      "x_political": 0.41178501338708073,
+      "x_institutional": 0.20426436460902622
+    }
+  },
+  "theory_names": [
+    "x_market",
+    "x_political",
+    "x_institutional"
+  ],
+  "convergence_info": {
+    "success": true,
+    "message": "Manual threshold optimization completed",
+    "nit": 0,
+    "fun": 23.68932133664895,
+    "method": "manual_thresholds",
+    "manual_thresholds": {
+      "alpha1": -0.6,
+      "alpha2": 0.6
+    },
+    "accuracy": [
+      1.0,
+      1.0,
+      1.0
+    ]
+  }
+}

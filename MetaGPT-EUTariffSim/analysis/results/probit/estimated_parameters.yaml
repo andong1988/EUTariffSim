@@ -1,0 +1,36 @@
+ordered_probit:
+  alpha1: -0.6
+  alpha2: 0.6
+theory_weights:
+  Denmark:
+    x_institutional: 0.14286775146373235
+    x_market: 0.14286775146373235
+    x_political: 0.7142644970725353
+  France:
+    x_institutional: 0.3389962456235258
+    x_market: 0.1666704071185543
+    x_political: 0.4943333472579198
+  Germany:
+    x_institutional: 0.14286640790856958
+    x_market: 0.7142671841828608
+    x_political: 0.14286640790856958
+  Ireland:
+    x_institutional: 0.5203338386666675
+    x_market: 0.20260241275562163
+    x_political: 0.2770637485777109
+  Italy:
+    x_institutional: 0.16651942664909936
+    x_market: 0.16651942664909936
+    x_political: 0.6669611467018014
+  Lithuania:
+    x_institutional: 0.5970910916272615
+    x_market: 0.16667118573120165
+    x_political: 0.2362377226415368
+  Netherland:
+    x_institutional: 0.17104827411230156
+    x_market: 0.16667167839233565
+    x_political: 0.6622800474953627
+  Spain:
+    x_institutional: 0.20426436460902622
+    x_market: 0.38395062200389307
+    x_political: 0.41178501338708073

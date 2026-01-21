@@ -1,0 +1,226 @@
+# 欧盟对华汽车关税投票模拟系统配置
+
+# LLM配置
+llm:
+  # OpenAI配置
+  openai:
+    api_key: ${OPENAI_API_KEY:}
+    base_url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+    model: "gpt-4-turbo-preview"
+    temperature: 0.0
+    max_tokens: 2000
+  
+  # DeepSeek配置
+  deepseek:
+    api_key: ${DEEPSEEK_API_KEY:}
+    base_url: "https://api.deepseek.com/v1"
+    model: "deepseek-chat"
+    temperature: 0.0
+    max_tokens: 2000
+  
+  # 智谱AI配置
+  zhipuai:
+    api_key: ${ZHIPUAI_API_KEY:}
+    model: "glm-4"
+    temperature: 0.0
+    max_tokens: 2000
+  
+  # 使用的LLM提供商（可配置多个用于交叉验证）
+  providers: ["openai", "deepseek", "zhipuai"]
+  primary_provider: "openai"
+
+# 模拟参数
+simulation:
+  # 国家数量
+  num_countries: 10
+  
+  # 谈判轮次
+  negotiation_rounds: 3
+  
+  # 投票阈值（合格多数）
+  voting_threshold: 0.65  # 65%的加权投票
+  
+  # 随机种子
+  random_seed: 42
+  
+  # 是否启用中国反制阶段
+  enable_china_retaliation: true
+  
+  # 是否启用重新评估阶段
+  enable_reassessment: true
+  
+  # 是否从缓存加载理论得分（默认不开启）
+  enable_theory_scores_cache: true
+
+# Ordered Probit模型配置
+ordered_probit:
+  # 是否使用Ordered Probit模型（暂时禁用，先测试基础功能）
+  use_model: true
+  
+  # 参数文件路径
+  params_path: "analysis/results/probit/estimated_parameters.json"
+  
+  # 阈值参数（用于3个类别：反对、弃权、赞成）
+  thresholds:
+    alpha1: 0.0   # 反对和弃权之间的阈值
+    alpha2: 0.5   # 弃权和赞成之间的阈值
+  
+  # 模型说明：
+  # Y* = Xβ + ε, ε ~ N(0,1)
+  # Y = 1 (反对) if Y* ≤ α1
+  # Y = 2 (弃权) if α1 < Y* ≤ α2
+  # Y = 3 (赞成) if Y* > α2
+  #
+  # 概率计算：
+  # P(Y=1) = Φ(α1 - Xβ)
+  # P(Y=2) = Φ(α2 - Xβ) - Φ(α1 - Xβ)
+  # P(Y=3) = 1 - Φ(α2 - Xβ)
+  # 其中 Φ 是标准正态分布的累积分布函数
+
+# 理论权重配置（三个维度）
+theory_weights:
+  # 默认权重（所有国家相同，确保有立场差异需要调整LLM提示或启用扰动）
+  initial:
+    structural_economic_constraints: 0.35      # 结构性经济约束
+    domestic_political_economic_mediation: 0.35  # 国内政治—经济中介机制
+    external_strategic_interaction: 0.3         # 外部战略与互动变量
+  
+  # 权重动态调整参数
+  dynamics:
+    learning_rate: 0.1
+    min_weight: 0.05
+    max_weight: 0.5
+
+# 旧的规则匹配匿名化配置（已弃用）
+anonymization:
+  # 身份匿名
+  identity:
+    use_codes: true
+    code_prefix: "Country_"
+    
+  # 特征抽象化
+  feature_abstraction:
+    levels: ["low", "medium", "high"]
+    bins: 3
+    
+  # 噪声注入
+  noise:
+    enabled: false
+    magnitude: 0.15  # ±15%
+    random_seed: 42
+
+# 数据匿名化配置（LLM驱动）
+data_anonymization:
+  # 是否启用数据匿名化（默认开启，需要手工控制）
+  enabled: false
+  
+  # 匿名化数据文件路径
+  output_file: "../anonymized_data.json"
+  
+  # LLM配置（用于数据匿名化）
+  llm:
+    provider: "openai"  # 使用的LLM提供商
+    model: "gpt-4-turbo-preview"
+    temperature: 0.3  # 较低的温度以获得更一致的输出
+    max_tokens: 2000
+  
+  # 匿名化维度配置
+  dimensions:
+    - name: "X_market"
+      description: "Market / Economic Interdependence"
+      max_words: 200
+    - name: "X_political"
+      description: "Domestic Politics and Interest Mediation"
+      max_words: 200
+    - name: "X_institutional"
+      description: "Institutions, Diplomacy, and Path Dependence"
+      max_words: 200
+  
+  # 重试配置
+  retry:
+    max_attempts: 3
+    delay_seconds: 2
+
+# 国家特征配置
+country_features:
+  # 经济维度
+  economic:
+    - gdp_per_capita
+    - trade_dependency_china
+    - automotive_industry_share
+    - innovation_index
+    
+  # 政治维度
+  political:
+    - political_orientation
+    - eu_integration_level
+    - us_alignment
+    - domestic_pressure
+    
+  # 战略维度
+  strategic:
+    - strategic_autonomy
+    - values_alignment
+    - security_concerns
+    - historical_relations
+
+# 事件配置
+events:
+  # 中国反制措施
+  china_retaliation:
+    - type: "tariff_increase"
+      intensity: 0.8
+      affected_sectors: ["automotive", "luxury_goods", "agriculture"]
+      
+    - type: "investment_restriction"
+      intensity: 0.6
+      affected_sectors: ["infrastructure", "technology", "energy"]
+      
+    - type: "diplomatic_signal"
+      intensity: 0.4
+      affected_sectors: ["diplomacy", "culture", "education"]
+
+# 数据收集配置
+data_collection:
+  # 数据采集时刻
+  collection_points: ["T0", "T1", "T2", "T3", "T4", "T5"]
+  
+  # 采集的数据类型
+  data_types:
+    - position_matrix
+    - communication_network
+    - theory_justification
+    - domestic_game
+    - event_impact
+  
+  # 输出格式
+  output:
+    format: "parquet"  # 可选: csv, json, parquet
+    directory: "./data/results"
+    timestamp_format: "%Y%m%d_%H%M%S"
+
+# 日志配置
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: "./logs/simulation.log"
+  max_size_mb: 100
+  backup_count: 5
+
+# 验证配置
+validation:
+  # 理论一致性验证
+  theory_consistency:
+    enabled: true
+    threshold: 0.7
+    
+  # 匿名化有效性检验
+  anonymization_check:
+    enabled: true
+    reverse_identification_tests: 10
+    
+  # 敏感性分析
+  sensitivity_analysis:
+    enabled: true
+    method: "morris"
+    n_trajectories: 100

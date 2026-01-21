@@ -1,0 +1,16 @@
+{
+  "initial": {
+    "theory_scores": {
+      "x_market": 0.95,
+      "x_political": 1.2,
+      "x_institutional": 1.1
+    }
+  },
+  "final": {
+    "theory_scores": {
+      "x_market": 0.6,
+      "x_political": 1.5,
+      "x_institutional": 1.8
+    }
+  }
+}
